@@ -1,0 +1,29 @@
+创建版本库
+$ git init
+$ git add readme.txt
+$ git commit -m "wrote a readme file"
+看文件内容
+$ cat readme.txt
+版本回退
+$ git log
+$ git reset --hard HEAD^
+$ git reset --hard 1094a
+$ git reflog
+查看状态
+$ git status
+查看工作区和版本库里面最新版本的区别
+$ git diff HEAD -- readme.txt 
+撤销修改 丢弃工作区的修改
+$ git checkout -- readme.txt
+把暂存区的修改撤销掉（unstage），重新放回工作区：
+$ git reset HEAD readme.txt
+删除文件
+$ rm test.txt
+$ git commit -m "remove test.txt"
+$ git checkout -- test.txt	（错删 还原工作区内容）
+放在远程仓库
+$ git remote add origin git@github.com:michaelliao/learngit.git
+$ git push -u origin master
+$ git push origin master
+克隆
+$ git remote add origin git@github.com:michaelliao/learngit.git
