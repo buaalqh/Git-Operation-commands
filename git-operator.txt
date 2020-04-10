@@ -32,7 +32,7 @@ $ git clone git@github.com:michaelliao/learngit.git
 	$ git switch -c dev
 	查看当前分支 $ git branch
 	切换回master分支 $ git checkout master / $ git switch master
-	把dev分支的工作成果合并到当前分支上 $ git merge dev
+	把dev分支的工作成果合并到当前分支上 $ git merge dev （请注意--no-ff参数，表示禁用Fast forward：$ git merge --no-ff -m "merge with no-ff" dev）
 	删除dev分支 $ git branch -d dev
 解决冲突：
-	当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。用git log --graph命令可以看到分支合并图。
+	当Git无法自动合并分支时，就必须首先解决冲突（解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。用git log --graph命令可以看到分支合并图。）。解决冲突后，再提交，合并完成。
