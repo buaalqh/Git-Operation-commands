@@ -21,12 +21,21 @@ $ git reset HEAD readme.txt
 $ rm test.txt
 $ git commit -m "remove test.txt"
 $ git checkout -- test.txt	（错删 还原工作区内容）
+
 放在远程仓库
 $ git remote add origin git@github.com:buaalqh/test.git
 $ git push -u origin master
-$ git push origin master
-克隆远程仓库
-$ git clone git@github.com:michaelliao/learngit.git
+$ git push origin master（Git就会把master分支推送到远程库对应的远程分支上）
+$ git remote/$ git remote -v（查看远程库的信息）
+$ git clone git@github.com:michaelliao/learngit.git（克隆远程仓库）
+$ git checkout -b dev origin/dev（同事要在dev分支上开发，必须创建远程origin的dev分支到本地，用该命令创建本地dev分支）
+	当此时我也需要提交到远程仓库时：
+		$ git branch --set-upstream-to=origin/dev dev（指定本地dev分支与远程origin/dev分支的链接）；
+		$ git pull（先用git pull把最新的提交从origin/dev抓下来）；
+		合并，解决冲突，提交，push；
+	$ git rebase（把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了）
+		
+
 分支管理：
 	创建dev分支并切换分支（git checkout命令加上-b参数表示创建并切换）
 		$ git checkout -b dev （$ git branch dev $ git checkout dev）；
@@ -38,7 +47,8 @@ $ git clone git@github.com:michaelliao/learngit.git
 		（请注意--no-ff参数，表示禁用Fast forward：$ git merge --no-ff -m "merge with no-ff" dev，本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。）；
 	当Git无法自动合并分支时，就必须首先解决冲突（解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。用git log --graph --pretty=oneline --abbrev-commit命令可以看到分支合并图）解决冲突后，再提交，合并完成；
 	删除dev分支 $ git branch -d dev；
-BUG分支：（思路1：stash自己的工作，在自己分支上改BUG，切换master复制修改，再恢复保存的stash）
+
+BUG分支：（思路1：stash自己的工作，在自己分支上改BUG，切换master复制修改，再恢复保存的stash）（分支：issue-101）
 	思路2：
 		工作只进行到一半，还没法提交，$ git stash；
 		确定BUG分支：$ git checkout master（如：master）；
