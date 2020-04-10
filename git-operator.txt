@@ -28,11 +28,22 @@ $ git push origin master
 克隆远程仓库
 $ git clone git@github.com:michaelliao/learngit.git
 分支管理：
-	创建dev分支并切换分支（git checkout命令加上-b参数表示创建并切换） $ git checkout -b dev （$ git branch dev $ git checkout dev）
-	$ git switch -c dev
-	查看当前分支 $ git branch
-	切换回master分支 $ git checkout master / $ git switch master
-	把dev分支的工作成果合并到当前分支上 $ git merge dev （请注意--no-ff参数，表示禁用Fast forward：$ git merge --no-ff -m "merge with no-ff" dev）
-	删除dev分支 $ git branch -d dev
-解决冲突：
-	当Git无法自动合并分支时，就必须首先解决冲突（解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。用git log --graph命令可以看到分支合并图。）。解决冲突后，再提交，合并完成。
+	创建dev分支并切换分支（git checkout命令加上-b参数表示创建并切换）
+		$ git checkout -b dev （$ git branch dev $ git checkout dev）；
+		$ git switch -c dev；
+	查看当前分支 $ git branch；
+	切换回master分支 $ git checkout master / $ git switch master；
+	把dev分支的工作成果合并到当前分支上 $ git merge dev ；
+		（合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息）；
+		（请注意--no-ff参数，表示禁用Fast forward：$ git merge --no-ff -m "merge with no-ff" dev，本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。）；
+	当Git无法自动合并分支时，就必须首先解决冲突（解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。用git log --graph --pretty=oneline --abbrev-commit命令可以看到分支合并图）解决冲突后，再提交，合并完成；
+	删除dev分支 $ git branch -d dev；
+BUG分支：（思路1：stash自己的工作，在自己分支上改BUG，切换master复制修改，再恢复保存的stash）
+	思路2：
+		工作只进行到一半，还没法提交，$ git stash；
+		确定BUG分支：$ git checkout master（如：master）；
+		创建临时分支：$ git checkout -b issue-101；修改，提交，切换回去，合并，删除临时分支，回到自己的分支：$ git switch dev；
+		重新打开之前没完成的工作：（查看命令：$ git stash list）git stash apply + git stash drop/（git stash pop），恢复指定stash$ git stash apply stash@{0}；
+		再修改自己分支上同样的BUG（复制一个特定的提交到当前分支）：$ git cherry-pick 4c805e2 
+Feature分支：丢弃一个没有被合并过的分支，可以通过$ git branch -D feature-vulcan强行删除。
+
